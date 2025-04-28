@@ -46,8 +46,6 @@
 
 <h2>Exercice 2 : Affichage verticale</h2>
 <p>Ecrire le programme pour afficher le texte en vertical</br>
-
-
 <%-- Afficher le texte en vertical --%>
 <% for (int i = 0; i < chaine.length(); i++) { %>
     <p><%= chaine.charAt(i) %></p>
@@ -55,7 +53,6 @@
 
 <h2>Exercice 3 : Retour à la ligne</h2>
 <p>La présence d'un espace provoque un retour à la ligne </br>
-
 <%-- Retour à la ligne à chaque espace --%>
 <% String[] mots = chaine.split(" "); %>
 <% for (String mot : mots) { %>
