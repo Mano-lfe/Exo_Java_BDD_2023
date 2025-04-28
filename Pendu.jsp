@@ -1,76 +1,113 @@
-import java.util.Scanner;
-import java.util.Random;
-import java.util.ArrayList;
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.*" %>
 
-public class JeuPendu {
-    private String motADeviner;
-    private char[] motCache;
-    private int essaisRestants;
-    private ArrayList<Character> lettresProposees;
+<html>
+<head>
+    <title>Jeu du Pendu</title>
+</head>
+<body bgcolor="white">
 
-    // Constructeur
-    public JeuPendu() {
-        String[] listeMots = {"ordinateur", "programme", "java", "souris", "clavier", "ecran", "internet", "serveur", "reseau", "developpeur"};
-        Random random = new Random();
-        motADeviner = listeMots[random.nextInt(listeMots.length)];
-        motCache = new char[motADeviner.length()];
-        for (int i = 0; i < motCache.length; i++) {
-            motCache[i] = '_';
-        }
-        essaisRestants = 6;
-        lettresProposees = new ArrayList<>();
+<%! 
+    String[] mots = {"JAVA", "PROGRAMME", "ORDINATEUR", "PENDU", "SERVEUR"};
+%>
+
+<%
+
+    String mot = (String) session.getAttribute("mot");
+    char[] motCache = (char[]) session.getAttribute("motCache");
+    ArrayList<Character> lettres = (ArrayList<Character>) session.getAttribute("lettres");
+    Integer essais = (Integer) session.getAttribute("essais");
+
+    if (mot == null) {
+        mot = mots[new Random().nextInt(mots.length)];
+        motCache = new char[mot.length()];
+        Arrays.fill(motCache, '_');
+        lettres = new ArrayList<Character>();
+        essais = 6;
+
+        session.setAttribute("mot", mot);
+        session.setAttribute("motCache", motCache);
+        session.setAttribute("lettres", lettres);
+        session.setAttribute("essais", essais);
     }
 
-    public void jouer() {
-        Scanner scanner = new Scanner(System.in);
+    String entree = request.getParameter("lettre");
 
-        while (essaisRestants > 0 && !motTrouve()) {
-            afficherEtat();
-            System.out.print("Proposez une lettre : ");
-            char lettre = scanner.nextLine().toLowerCase().charAt(0);
-
-            if (lettresProposees.contains(lettre)) {
-                System.out.println("Vous avez déjà proposé cette lettre !");
-            } else {
-                lettresProposees.add(lettre);
-                if (motADeviner.indexOf(lettre) >= 0) {
-                    // Révéler les lettres dans motCache
-                    for (int i = 0; i < motADeviner.length(); i++) {
-                        if (motADeviner.charAt(i) == lettre) {
-                            motCache[i] = lettre;
-                        }
-                    }
-                    System.out.println("Bien joué !");
-                } else {
-                    essaisRestants--;
-                    System.out.println("Raté !");
+    if (entree != null && entree.length() == 1) {
+        char l = Character.toUpperCase(entree.charAt(0));
+        if (!lettres.contains(l)) {
+            lettres.add(l);
+            boolean trouve = false;
+            for (int i = 0; i < mot.length(); i++) {
+                if (mot.charAt(i) == l) {
+                    motCache[i] = l;
+                    trouve = true;
                 }
             }
-        }
-
-        if (motTrouve()) {
-            System.out.println("\nBravo ! Vous avez trouvé le mot : " + motADeviner);
-        } else {
-            System.out.println("\nDommage... Le mot était : " + motADeviner);
-        }
-    }
-
-    private boolean motTrouve() {
-        for (char c : motCache) {
-            if (c == '_') {
-                return false;
+            if (!trouve) {
+                essais--;
             }
+            session.setAttribute("motCache", motCache);
+            session.setAttribute("lettres", lettres);
+            session.setAttribute("essais", essais);
         }
-        return true;
     }
 
-    private void afficherEtat() {
-        System.out.print("\nMot à deviner : ");
-        for (char c : motCache) {
-            System.out.print(c + " ");
+    boolean gagne = true;
+    for (char c : motCache) {
+        if (c == '_') {
+            gagne = false;
+            break;
         }
-        System.out.println("\nLettres proposées : " + lettresProposees);
-        System.out.println("Essais restants : " + essaisRestants);
     }
-}
+%>
 
+<h1>Jeu du Pendu</h1>
+
+<p>
+<%
+    for (char c : motCache) {
+        out.print(c + " ");
+    }
+%>
+</p>
+
+<p>Lettres proposées : 
+<%
+    for (char c : lettres) {
+        out.print(c + " ");
+    }
+%>
+</p>
+
+<p>Essais restants : <%= essais %></p>
+
+<%
+    if (essais > 0 && !gagne) {
+%>
+    <form method="post">
+        <input type="text" name="lettre" maxlength="1">
+        <input type="submit" value="Proposer">
+    </form>
+<%
+    } else if (gagne) {
+%>
+    <h2>Bravo ! Mot trouvé : <%= mot %></h2>
+    <form method="post">
+        <input type="submit" value="Rejouer">
+        <% session.invalidate(); %>
+    </form>
+<%
+    } else {
+%>
+    <h2>Perdu ! Le mot était : <%= mot %></h2>
+    <form method="post">
+        <input type="submit" value="Rejouer">
+        <% session.invalidate(); %>
+    </form>
+<%
+    }
+%>
+
+</body>
+</html>
