@@ -76,7 +76,7 @@
 <% for (int i = 1; i <= cpt; i++) { %>
     <p>
     <% for (int j = 1; j <= cpt - i; j++) { %>
-        &nbsp;
+  
     <% } %>
     <% for (int k = 1; k <= i; k++) { %>
         <%= "*" %>
