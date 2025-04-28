@@ -65,12 +65,12 @@
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</br>&nbsp;&nbsp;&nbsp;&nbsp;***</br>&nbsp;&nbsp;****</br>*****</p>
 
 
-<% for(int i = 0; i < val; i++) { %>
-<% for(int j = 0; j < Val-i 1; j++) { %>
+<% for(int i = 0; i < cpt; i++) { %>
+<% for(int j = 0; j < cpt-i ; j++) { %>
 <% System.out.print(" "); %>
     <% } %>
 
-<% for(int j = 0; j <= i; j++) { %>
+<% for(int k = 0; j <= i; j++) { %>
 <% System.out.print("*"); %>
 <% } %>
 <% System.out.println(""); %>
