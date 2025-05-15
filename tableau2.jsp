@@ -48,6 +48,30 @@ String message = "";
             background-color: #f2f2f2;
             margin: 40px;
         }
+ .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ccc;
+            max-width: 500px;
+            margin: auto;
+        }
+        input[type="number"] {
+            width: 100px;
+            padding: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border: 1px solid #2196F3;
+            color: #0b5394;
+            border-radius: 5px;
+        }
 
 
 
