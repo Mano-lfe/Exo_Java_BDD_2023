@@ -72,6 +72,47 @@ String message = "";
             color: #0b5394;
             border-radius: 5px;
         }
+    .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Gestion du Tableau</h2>
+    <form method="post">
+        <label>Entrer une valeur :</label>
+        <input type="number" name="valeur" />
+        <br><br>
+        <button type="submit" name="action" value="ajouter">Ajouter</button>
+        <button type="submit" name="action" value="supprimer">Supprimer la dernière</button>
+        <button type="submit" name="action" value="afficher">Afficher le tableau</button>
+        <button type="submit" name="action" value="vider">Vider le tableau</button>
+    </form>
+
+    <% if (!message.isEmpty()) { %>
+        <div class="message"><%= message %></div>
+    <% } %>
+
+    <% if ("afficher".equals(action)) { %>
+        <div class="output">
+            <strong>Contenu du tableau :</strong><br>
+            <% if (tableau.isEmpty()) { %>
+                Le tableau est vide.
+            <% } else { %>
+                <%= tableau.toString() %>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
+</body>
+</html>
 
 
 
