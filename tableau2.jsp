@@ -19,5 +19,18 @@ String message = "";
                 tableau.add(valeur);
                 message = "Valeur ajoutée avec succès.";
             } else {
+   message = "Erreur : le tableau est plein.";
+            }
+        } catch (Exception e) {
+            message = "Erreur : valeur invalide.";
+        }
+    } else if ("supprimer".equals(action)) {
+        if (!tableau.isEmpty()) {
+            tableau.remove(tableau.size() - 1);
+            message = "Dernière valeur supprimée.";
+        } else {
+            message = "Erreur : tableau vide, rien à supprimer.";
+        }
+
 
 
