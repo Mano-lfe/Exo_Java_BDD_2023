@@ -8,4 +8,16 @@
         tableau = new ArrayList<>();
         session.setAttribute("tableau", tableau);
     }
+String message = "";
+    String action = request.getParameter("action");
+
+    if ("ajouter".equals(action)) {
+        String val = request.getParameter("valeur");
+        try {
+            int valeur = Integer.parseInt(val);
+            if (tableau.size() < 10) {
+                tableau.add(valeur);
+                message = "Valeur ajoutée avec succès.";
+            } else {
+
 
