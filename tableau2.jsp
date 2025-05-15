@@ -31,6 +31,23 @@ String message = "";
         } else {
             message = "Erreur : tableau vide, rien à supprimer.";
         }
+ } else if ("vider".equals(action)) {
+        tableau.clear();
+        message = "Tableau vidé avec succès.";
+    }
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de Tableau</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 40px;
+        }
 
 
 
